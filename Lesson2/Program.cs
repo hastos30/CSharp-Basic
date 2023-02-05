@@ -10,7 +10,7 @@
         Console.WriteLine($"1. Возраст человека: {ageHuman} лет");
 
         // 2. Банківський рахунок з лімітом від -1 000 000 000 000 до 1 000 000 000 000 грн
-        long bankSaving = 999_000_434_644;
+        decimal bankSaving = 999_000_434_644.00m;
         Console.WriteLine($"2. Банковский счет составляет: {bankSaving} грн.");
 
         // 3. Літера
@@ -33,7 +33,7 @@
         }
 
         // 6. Температуру людини
-        double humanTemperature = 36.6;
+        float humanTemperature = 36.6f;
         Console.WriteLine($"6. Температура человека: {humanTemperature}");
 
         // 7. Кількість населення планети
@@ -41,7 +41,7 @@
         Console.WriteLine($"7. Количество людей на планете составляет: ~{numberPeopleOnEarth}");
 
         //8. Температуру навколишньго середовища в Укриїні
-        sbyte temperatureInUkrain = -1;
+        float temperatureInUkrain = -10.5f;
         Console.WriteLine($"8. Температура в Украине: {temperatureInUkrain} градуса по цельсию");
 
         /* Вимога 1.
