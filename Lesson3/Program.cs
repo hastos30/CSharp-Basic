@@ -2,17 +2,8 @@
 {
     static void Main(string[] args)
     {
-        //оператор if-else
-        //AuthenticationIfElse();
-
-
-        //оператор switch
-        //AuthenticationSwitch();
-        
-        //оператор тернарный
-        AuthenticationTernary();
+        AuthenticationIfElse();
     }
-
     static void AuthenticationIfElse()
     {
         Console.WriteLine("Введите логин: ");
