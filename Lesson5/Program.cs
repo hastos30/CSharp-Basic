@@ -30,14 +30,15 @@
                 }
                 Console.WriteLine();
             }
+            
             Console.WriteLine("Хотите еще? 1 - да, 2 - нет");
             int result = Convert.ToInt32(Console.ReadLine());
+            
             if(result == 1)
                startStop = true;
             else if(result == 2)
                 startStop = false;
         }
         while(startStop);
-        
     }
 }
