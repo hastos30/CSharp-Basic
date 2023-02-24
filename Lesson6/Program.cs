@@ -2,6 +2,11 @@
 {
     static void Main(string[] args)
     {
+     /*
+     * setNum1 и setNum2 можно было бы сделать одним методом, поскольку выполняется тоже самое
+     * но решил сделать отдельно, что бы продемонстрировать манипуляцию методами. В целом этоу
+     * программу можно было бы еще больше оптимизировать, но выходя из условий задания - все сделал :) 
+     */
         Calculator();
     }
 
@@ -10,34 +15,35 @@
         bool startStop = false;
         do
         {
-        int num1 = setNum1();
-        int num2 = setNum2();
-        int result = setOperation(num1, num2);
-        Console.WriteLine($"Результат исчисления: {result}");
+            int num1 = SetNum1();
+            int num2 = SetNum2();
+            int result = SetOperation(num1, num2);
+            Console.WriteLine($"Результат исчисления: {result}");
             Console.WriteLine("*******************************");
             Console.WriteLine();
+
             Console.WriteLine("Еще? 1 - да, 2 - нет");
             char yesOrNo  = char.Parse(Console.ReadLine());
-            if(yesOrNo == '1') startStop= true;
-            else startStop = false;
+                if(yesOrNo == '1') startStop= true;
+                else startStop = false;
         }while(startStop);
     }
-
-    static int setNum1()
+    
+    static int SetNum1()
     {
         Console.WriteLine("Введите первое целое число: ");
         int value = Convert.ToInt32(Console.ReadLine());
         return value;
     }
 
-    static int setNum2()
+    static int SetNum2()
     {
         Console.WriteLine("Введите второе целое число: ");
         int value = Convert.ToInt32(Console.ReadLine());
         return value;
     }
 
-    static int setOperation(int num1, int num2)
+    static int SetOperation(int num1, int num2)
     {
         Console.WriteLine("Введите тип операции: ( + - / * ^ ) ");
         char oper = Convert.ToChar(Console.ReadLine());
