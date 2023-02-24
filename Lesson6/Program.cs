@@ -49,8 +49,6 @@
         char oper = Convert.ToChar(Console.ReadLine());
         int result = 0;
 
-        if (oper == '+' || oper == '-' || oper == '/' || oper == '*' || oper == '^')
-        {
             switch (oper)
             {
                 case '+':
@@ -76,12 +74,10 @@
                 case '^':
                     result = Exponentiation(num1, num2);
                     break;
+                default:
+                    Console.WriteLine("Недопустимый символ!");
+                    break;
             }
-        }
-        else
-        {
-            Console.WriteLine("Недопустимый символ!");
-        }
         return result;
     }
 
