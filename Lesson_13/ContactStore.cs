@@ -2,7 +2,6 @@
 
 namespace Lesson_13
 {
-
     public class ContactStore : BaseContactStore
     {
         public ContactStore(IContactProvider contactProvider)
@@ -12,6 +11,17 @@ namespace Lesson_13
 
         public override void Create(IContact contact)
         {
+            if (_contacts.Any(c => c.Name == contact.Name))
+            {
+                throw new DeniedOperationException($"Contact with {nameof(contact.Name)} {contact.Name} is already exists");
+            }
+            int newId = 1;
+            if (_contacts.Any())
+            {
+                newId = _contacts.Max(c => c.Id) + 1;
+            }
+
+            contact.Id = newId;
             _contacts.Add(contact);
         }
 
@@ -55,15 +65,14 @@ namespace Lesson_13
 
         public override bool Remove(int id)
         {
-            for (int i = 0; i < _contacts.Count; i++)
+            var contactToRemove = _contacts.FirstOrDefault(c => c.Id == id);
+            
+            if (contactToRemove == null)
             {
-                if (_contacts[i].Id == id)
-                {
-                    _contacts.RemoveAt(i);
-                    return true;
-                }
+                throw new DeniedOperationException($"Contact with {nameof(IContact.Id)} {id} is not exists");
             }
-            return false;
+            _contacts.Remove(contactToRemove);
+            return true;
         }
 
         public override void Update(IContact contact)

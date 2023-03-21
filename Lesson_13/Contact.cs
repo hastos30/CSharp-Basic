@@ -4,8 +4,8 @@ namespace Lesson_13
 {
     internal class Contact : IContact
     {
-        string IContact.Name { get; set; }
-        string IContact.PhoneNumber { get; set; }
-        int IIdentity.Id { get; set; }
+        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
+        public int Id { get; set; }
     }
 }
