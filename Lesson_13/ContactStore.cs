@@ -2,11 +2,20 @@
 
 namespace Lesson_13
 {
-    public class ContactStore : BaseContactStore
+    public class ContactStore : BaseContactStore, INotifiable
     {
+        private readonly IContactSaveable _contactSaveable;
+        
+        public event SaveDelegate SaveEvent;
+
         public ContactStore(IContactProvider contactProvider)
         : base(contactProvider)
         {
+            if (contactProvider is IContactSaveable contactSaveable)
+            {
+                _contactSaveable = contactSaveable;
+                SaveEvent += _contactSaveable.Save;
+            }
         }
 
         public override void Create(IContact contact)
@@ -23,6 +32,7 @@ namespace Lesson_13
 
             contact.Id = newId;
             _contacts.Add(contact);
+            OnSaveEvent();
         }
 
         public override IContact GetById(int id)
@@ -66,12 +76,13 @@ namespace Lesson_13
         public override bool Remove(int id)
         {
             var contactToRemove = _contacts.FirstOrDefault(c => c.Id == id);
-            
+
             if (contactToRemove == null)
             {
                 throw new DeniedOperationException($"Contact with {nameof(IContact.Id)} {id} is not exists");
             }
             _contacts.Remove(contactToRemove);
+            OnSaveEvent();
             return true;
         }
 
@@ -82,9 +93,15 @@ namespace Lesson_13
                 if (_contacts[i].Id == contact.Id)
                 {
                     _contacts[i] = contact;
+                    OnSaveEvent();
                     return;
                 }
             }
+        }
+
+        protected virtual void OnSaveEvent()
+        {
+            SaveEvent?.Invoke(_contacts);
         }
     }
 }

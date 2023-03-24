@@ -1,40 +1,54 @@
 ﻿namespace Lesson_13
 {
+    enum Options
+    {
+        ShowContacts = 1,
+        AddContact,
+        RemoveContactById,
+        Exit
+    }
+
     internal class Program
     {
         static void Main(string[] args)
         {
-            var contactStore = new ContactStore(new InMemoryContactProvider());
+            var contactStore = new ContactStore(new PersistentContactProvider());
             bool exit = false;
 
             do
             {
                 Console.WriteLine("Choose an option:");
-                Console.WriteLine("1. Show contacts");
-                Console.WriteLine("2. Add contact");
-                Console.WriteLine("3. Remove contact by id");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine($"{(int)Options.ShowContacts}. Show contacts");
+                Console.WriteLine($"{(int)Options.AddContact}. Add contact");
+                Console.WriteLine($"{(int)Options.RemoveContactById}. Remove contact by id");
+                Console.WriteLine($"{(int)Options.Exit}. Exit");
 
                 string option = Console.ReadLine();
 
-                switch (option)
+                if (!Enum.TryParse(option, out Options selectedOption))
                 {
-                    case "1":
+                    Console.WriteLine("Invalid option");
+                    continue;
+                }
+
+                switch (selectedOption)
+                {
+                    case Options.ShowContacts:
                         Console.WriteLine("Contacts:");
                         foreach (var contact in contactStore)
                         {
                             Console.WriteLine($"Id: {contact.Id}, Name: {contact.Name}, Phone number: {contact.PhoneNumber}");
                         }
                         break;
-                    case "2":
+                    case Options.AddContact:
                         Console.Write("Enter contact name: ");
                         string name = Console.ReadLine();
                         Console.Write("Enter contact phone number: ");
                         string phoneNumber = Console.ReadLine();
-                        
+
                         try
                         {
-                            contactStore.Create(new Contact { Name = name, PhoneNumber = phoneNumber});
+                            contactStore.Create(new Contact { Name = name, PhoneNumber = phoneNumber });
                             Console.WriteLine("Contact added successfully");
                         }
                         catch (DeniedOperationException e)
@@ -46,7 +60,7 @@
                             Console.WriteLine("Ooops... something went wrong");
                         }
                         break;
-                    case "3":
+                    case Options.RemoveContactById:
                         Console.Write("Enter contact id: ");
                         int id = int.Parse(Console.ReadLine());
                         try
@@ -70,11 +84,8 @@
                             Console.WriteLine("Ooops... something went wrong");
                         }
                         break;
-                    case "4":
+                    case Options.Exit:
                         exit = true;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid option");
                         break;
                 }
                 Console.WriteLine();
